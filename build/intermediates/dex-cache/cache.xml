@@ -2,29 +2,29 @@
 <pre-dex-items>
 
     <item
-        dex="C:\Users\Patrick\AndroidStudioProjects\BatteryDrainer\app\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-05b7f994427b8f4e68fd627c0d174f0ccb3f7bfc.jar"
-        jar="C:\Users\Patrick\AndroidStudioProjects\BatteryDrainer\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\libs\internal_impl-20.0.0.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
-    <item
         dex="C:\Users\Patrick\AndroidStudioProjects\BatteryDrainer\app\build\intermediates\pre-dexed\debug\classes-5918300c712815f00c7c064a3f353d826b2136d1.jar"
         jar="C:\Users\Patrick\AndroidStudioProjects\BatteryDrainer\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\20.0.0\classes.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="f21927d22fe31889ecce94dd697a2e75b137e0ef"/>
     <item
-        dex="C:\Users\Patrick\AndroidStudioProjects\BatteryDrainer\app\build\intermediates\pre-dexed\debug\classes-67bd5b1d06baa89a5edd6bc23ea3168157306004.jar"
-        jar="C:\Users\Patrick\AndroidStudioProjects\BatteryDrainer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.1.71\classes.jar"
+        dex="C:\Users\Patrick\AndroidStudioProjects\BatteryDrainer\app\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-05b7f994427b8f4e68fd627c0d174f0ccb3f7bfc.jar"
+        jar="C:\Users\Patrick\AndroidStudioProjects\BatteryDrainer\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\libs\internal_impl-20.0.0.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="0f6d5c1ef2e982c3b7858408e3df389cf5d202da"/>
+        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
     <item
         dex="C:\Users\Patrick\AndroidStudioProjects\BatteryDrainer\app\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-215e2b51c35cac0e9faa66850ea6d9e22941700a.jar"
         jar="C:\Users\Patrick\Documents\adt-bundle-windows-x86_64-20140702\sdk\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
+    <item
+        dex="C:\Users\Patrick\AndroidStudioProjects\BatteryDrainer\app\build\intermediates\pre-dexed\debug\classes-67bd5b1d06baa89a5edd6bc23ea3168157306004.jar"
+        jar="C:\Users\Patrick\AndroidStudioProjects\BatteryDrainer\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.1.71\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="0f6d5c1ef2e982c3b7858408e3df389cf5d202da"/>
     <item
         dex="C:\Users\Patrick\AndroidStudioProjects\BatteryDrainer\app\build\intermediates\pre-dexed\debug\classes-764ee9c04533c37954d36c755e1e3c712056dea7.jar"
         jar="C:\Users\Patrick\AndroidStudioProjects\BatteryDrainer\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\classes.jar"

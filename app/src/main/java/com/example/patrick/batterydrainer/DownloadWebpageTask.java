@@ -13,7 +13,6 @@ import java.net.URL;
 public class DownloadWebpageTask extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... urls) {
-
         try {
             return downloadUrl(urls[0]);
         } catch (IOException e) {
@@ -22,8 +21,6 @@ public class DownloadWebpageTask extends AsyncTask<String, Void, String> {
     }
 
     private String downloadUrl(String myurl) throws IOException {
-        InputStream is = null;
-
         try {
             while (true) {
                 URL url = new URL(myurl);
@@ -32,11 +29,8 @@ public class DownloadWebpageTask extends AsyncTask<String, Void, String> {
                 conn.setConnectTimeout(15000);
                 conn.setRequestMethod("GET");
                 conn.setDoInput(true);
-                // Starts the query
                 conn.connect();
-                int response = conn.getResponseCode();
-                System.out.println("The response is: " + response);
-                is = conn.getInputStream();
+                InputStream is = conn.getInputStream();
                 if (is != null) {
                     is.close();
                 }
