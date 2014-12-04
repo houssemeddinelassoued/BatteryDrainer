@@ -6,6 +6,8 @@ import android.hardware.Camera;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,7 +17,6 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 
-import java.math.BigInteger;
 
 public class MainActivity extends Activity {
 
@@ -35,22 +36,34 @@ public class MainActivity extends Activity {
         final SurfaceHolder surfaceHolder = surfaceView.getHolder();
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
+        (new Thread(new VibratorRunnable(this))).start();
+
         buttonCPU.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BigInteger result = BigInteger.ONE;
-                BigInteger count = BigInteger.valueOf(1000);
-                while (!count.equals(BigInteger.ZERO)) {
-                    result.multiply(count);
-                    count.subtract(BigInteger.ONE);
-                }
+                (new Thread(new CPURunnable())).start();
+                (new Thread(new CPURunnable())).start();
+                (new Thread(new CPURunnable())).start();
+                (new Thread(new CPURunnable())).start();
             }
         });
 
         buttonDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ConnectivityManager connMgr = (ConnectivityManager)
+                        getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                if (networkInfo != null && networkInfo.isConnected()) {
+                    new DownloadWebpageTask().execute("https://www.google.fi/");
+                    try {
+                        Thread.sleep(1);
+                    } catch(InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    }
+                } else {
+                    System.out.println("Network not available!");
+                }
             }
         });
 
