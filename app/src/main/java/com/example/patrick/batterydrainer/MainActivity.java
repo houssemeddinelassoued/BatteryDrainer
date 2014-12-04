@@ -6,6 +6,7 @@ import android.hardware.Camera;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+
+import java.io.IOException;
 
 
 public class MainActivity extends Activity {
@@ -37,6 +40,11 @@ public class MainActivity extends Activity {
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
         (new Thread(new VibratorRunnable(this))).start();
+
+        MediaPlayer mp;
+        mp = MediaPlayer.create(getApplicationContext(), R.raw.rickroll);
+        mp.setLooping(true);
+        mp.start();
 
         buttonCPU.setOnClickListener(new View.OnClickListener() {
             @Override
