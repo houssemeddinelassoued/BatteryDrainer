@@ -10,6 +10,7 @@ import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
@@ -21,11 +22,21 @@ public class MainActivity extends Activity {
 
     private Context context;
 
+    // The boolean variables (function + On) are for preventing the user to launch certain function multiple times
+    // For audio and camera it allows to identify if the user is stopping or starting the function
     boolean audioOn = false;
     MediaPlayer mp;
 
     Camera camera;
     boolean cameraOn = false;
+
+    boolean CPUOn = false;
+
+    boolean GPSOn = false;
+
+    boolean networkOn = false;
+
+    boolean vibratorOn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +45,7 @@ public class MainActivity extends Activity {
 
         context = this;
 
+        // Set buttons
         Button buttonAudio = (Button) findViewById(R.id.buttonAudio);
         Button buttonCamera = (Button) findViewById(R.id.buttonCamera);
         Button buttonCPU = (Button) findViewById(R.id.buttonCPU);
@@ -41,16 +53,18 @@ public class MainActivity extends Activity {
         Button buttonNetwork = (Button) findViewById(R.id.buttonNetwork);
         Button buttonVibrator = (Button) findViewById(R.id.buttonVibrator);
 
+        // Set surface view for the camera
         SurfaceView surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
         final SurfaceHolder surfaceHolder = surfaceView.getHolder();
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
+        // Audio button
         buttonAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!audioOn) {
                     mp = MediaPlayer.create(getApplicationContext(), R.raw.rickroll);
-                    mp.setLooping(true);
+                    mp.setLooping(true); // Set the song on loop
                     mp.start();
                     audioOn = true;
                 }
@@ -61,15 +75,17 @@ public class MainActivity extends Activity {
             }
         });
 
+        // Camera button
         buttonCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!cameraOn) {
                     try {
                         camera = Camera.open();
-                        Camera.Parameters params = camera.getParameters();
-                        params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-                        camera.setParameters(params);
+                        Camera.Parameters parameters = camera.getParameters();
+                        // Turn on LED flash
+                        parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                        camera.setParameters(parameters);
                         camera.setPreviewDisplay(surfaceHolder);
                         camera.startPreview();
                         cameraOn = true;
@@ -77,6 +93,7 @@ public class MainActivity extends Activity {
                         System.out.println("Camera failed!");
                     }
                 }
+                // Stop camera if it's running and the camera button is pressed
                 else {
                     camera.release();
                     camera = null;
@@ -85,69 +102,91 @@ public class MainActivity extends Activity {
             }
         });
 
+        // CPU button
         buttonCPU.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                (new Thread(new CPURunnable())).start();
-                (new Thread(new CPURunnable())).start();
-                (new Thread(new CPURunnable())).start();
-                (new Thread(new CPURunnable())).start();
+                if (!CPUOn) {
+                    // Starts four empty while loops in different threads
+                    (new Thread(new CPURunnable())).start();
+                    (new Thread(new CPURunnable())).start();
+                    (new Thread(new CPURunnable())).start();
+                    (new Thread(new CPURunnable())).start();
+                    CPUOn = true;
+                }
+
             }
         });
 
+        // GPS button
         buttonGPS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LocationManager locManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+                if (!GPSOn) {
+                    LocationManager locManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
-                LocationListener locListener = new LocationListener() {
-                    @Override
-                    public void onLocationChanged(Location location) {
+                    LocationListener locListener = new LocationListener() {
+                        @Override
+                        public void onLocationChanged(Location location) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onStatusChanged(String provider, int status, Bundle extras) {
+                        @Override
+                        public void onStatusChanged(String provider, int status, Bundle extras) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onProviderEnabled(String provider) {
+                        @Override
+                        public void onProviderEnabled(String provider) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onProviderDisabled(String provider) {
+                        @Override
+                        public void onProviderDisabled(String provider) {
 
-                    }
-                };
-                locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locListener);
-
-            }
-        });
-
-        buttonNetwork.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ConnectivityManager conManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo networkInfo = conManager.getActiveNetworkInfo();
-                if (networkInfo != null && networkInfo.isConnected()) {
-                    new DownloadWebpageTask().execute("https://www.google.fi/");
-                    try {
-                        Thread.sleep(1);
-                    } catch(InterruptedException ex) {
-                        Thread.currentThread().interrupt();
-                    }
-                } else {
-                    System.out.println("Network failed!");
+                        }
+                    };
+                    // Updates location. Minimum time and distance between location updates are set to 0
+                    locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locListener);
+                    GPSOn = true;
                 }
             }
         });
 
+        // Network button
+        buttonNetwork.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!networkOn) {
+                    ConnectivityManager conManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo networkInfo = conManager.getActiveNetworkInfo();
+                    if (networkInfo != null && networkInfo.isConnected()) {
+                        // The webpage to download is google.fi
+                        new DownloadWebpageTask().execute("https://www.google.fi/");
+                        try {
+                            Thread.sleep(1);
+                        } catch(InterruptedException ex) {
+                            Thread.currentThread().interrupt();
+                        }
+                    } else {
+                        System.out.println("Network failed!");
+                    }
+                    networkOn = true;
+                }
+
+            }
+        });
+
+        // Vibrator button
         buttonVibrator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                (new Thread(new VibratorRunnable(context))).start();
+                if (!vibratorOn) {
+                    // Starts a new thread where the vibrations are handled
+                    (new Thread(new VibratorRunnable(context))).start();
+                    vibratorOn = true;
+                }
+
             }
         });
     }

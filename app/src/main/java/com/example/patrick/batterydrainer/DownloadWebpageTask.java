@@ -10,6 +10,7 @@ import java.net.URL;
 /**
  * Created by Patrick on 4.12.2014.
  */
+// Handles the webpage download
 public class DownloadWebpageTask extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... urls) {
@@ -27,6 +28,7 @@ public class DownloadWebpageTask extends AsyncTask<String, Void, String> {
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(10000);
                 conn.setConnectTimeout(15000);
+                // Uses GET method
                 conn.setRequestMethod("GET");
                 conn.setDoInput(true);
                 conn.connect();
