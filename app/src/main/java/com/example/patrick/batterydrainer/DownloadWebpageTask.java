@@ -32,6 +32,7 @@ public class DownloadWebpageTask extends AsyncTask<String, Void, String> {
                 conn.setRequestMethod("GET");
                 conn.setDoInput(true);
                 conn.connect();
+                // Get data from resource
                 InputStream is = conn.getInputStream();
                 if (is != null) {
                     is.close();

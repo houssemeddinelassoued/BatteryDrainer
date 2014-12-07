@@ -17,7 +17,7 @@ public class VibratorRunnable implements Runnable {
         // Starts an endless loop of 1ms vibrations
         while(true){
             vibrator = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
-            vibrator.vibrate(1);
+            vibrator.vibrate(100);
         }
     }
 }

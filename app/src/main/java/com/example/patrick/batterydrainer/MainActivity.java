@@ -159,21 +159,16 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 if (!networkOn) {
                     ConnectivityManager conManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                    // Check if network is available
                     NetworkInfo networkInfo = conManager.getActiveNetworkInfo();
                     if (networkInfo != null && networkInfo.isConnected()) {
                         // The webpage to download is google.fi
                         new DownloadWebpageTask().execute("https://www.google.fi/");
-                        try {
-                            Thread.sleep(1);
-                        } catch(InterruptedException ex) {
-                            Thread.currentThread().interrupt();
-                        }
+                        networkOn = true;
                     } else {
                         System.out.println("Network failed!");
                     }
-                    networkOn = true;
                 }
-
             }
         });
 
